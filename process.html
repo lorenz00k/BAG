@@ -5,37 +5,47 @@
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>Infos zum Verfahren</title>
   <link rel="stylesheet" href="assets/styles.css"/>
+
+  <!-- GA4 + Consent Mode v2 -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+
+    // 1) Default: alles verweigert
+    gtag('consent', 'default', {
+      ad_user_data: 'denied',
+      ad_personalization: 'denied',
+      ad_storage: 'denied',
+      analytics_storage: 'denied'
+    });
+
+    // 2) Vorhandene Entscheidung anwenden (aus localStorage)
+    try {
+      var saved = localStorage.getItem('ga_consent');
+      if (saved === 'granted' || saved === 'denied') {
+        gtag('consent', 'update', { analytics_storage: saved });
+      }
+    } catch (e) { /* ignore */ }
+  </script>
+
+  <!-- GA4: Mess-ID einmalig (IDENTISCH auf allen Seiten!) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-RLN7N8WFZF"></script>
+  <script>
+    gtag('js', new Date());
+    gtag('config', 'G-RLN7N8WFZF');
+  </script>
 </head>
-
-<!-- Google tag (gtag.js) -->
-<script>
-window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-
-// Standard: Ohne Einwilligung ist alles deaktiviert
-gtag('consent', 'default', {
-  ad_user_data: 'denied',
-  ad_personalization: 'denied',
-  ad_storage: 'denied',
-  analytics_storage: 'denied'
-});
-</script>
-
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-A1BCD2EFGH"></script>
-<script>
-gtag('js', new Date());
-gtag('config', 'G-RLN7N8WFZF');
-</script>
 
 <body>
   <div class="container">
     <header class="header">
       <a class="brand" href="index.html" aria-label="Start">
-<svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-<rect x="2" y="2" width="20" height="20" rx="6" stroke="#7ee787" stroke-width="2"/>
-<path d="M7 12h10M12 7v10" stroke="#7ee787" stroke-width="2" stroke-linecap="round"/>
-</svg>
-<strong>Genehmigungs‑Check</strong></a>
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="2" y="2" width="20" height="20" rx="6" stroke="#7ee787" stroke-width="2"/>
+          <path d="M7 12h10M12 7v10" stroke="#7ee787" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <strong>Genehmigungs-Check</strong>
+      </a>
       <div class="lang">
         <span data-i18n-common="lang">Sprache</span>
         <select id="langSel" aria-label="Sprache wählen">
@@ -49,10 +59,10 @@ gtag('config', 'G-RLN7N8WFZF');
       <div class="card">
         <h1 id="title">Infos zum Verfahren (Kurz)</h1>
         <ul>
-          <li id="s1">Zuständig …</li>
-          <li id="s2">Unterlagen …</li>
-          <li id="s3">Ablauf …</li>
-          <li id="s4">Änderungen …</li>
+          <li id="s1">Zuständig: Bezirksamt Wien (mit Fachstellen)</li>
+          <li id="s2">Unterlagen: Pläne, Nutzung, Emissionen, Brandschutz, Nachweise</li>
+          <li id="s3">Ablauf: Antrag → Prüfung → ggf. Auflagen → Bescheid</li>
+          <li id="s4">Änderungen können erneut genehmigungspflichtig sein</li>
         </ul>
         <div class="buttons">
           <a id="back" class="button" href="index.html">Zur Startseite</a>
@@ -67,6 +77,46 @@ gtag('config', 'G-RLN7N8WFZF');
       </nav>
     </footer>
   </div>
+
   <script src="js/app.js"></script>
+
+  <!-- (Optional) Consent-Banner auch hier anzeigen -->
+  <div id="consent-banner" style="
+    position:fixed;bottom:0;left:0;right:0;background:#222;color:#fff;
+    padding:16px;text-align:center;z-index:1000;">
+    Diese Website verwendet Google Analytics (GA4) zur Reichweitenmessung.
+    <button id="accept" style="margin-left:8px;">Akzeptieren</button>
+    <button id="decline" style="margin-left:4px;">Ablehnen</button>
+  </div>
+
+  <script>
+    (function(){
+      function hideBanner(){
+        var b = document.getElementById('consent-banner');
+        if (b) b.remove();
+      }
+      try {
+        var saved = localStorage.getItem('ga_consent');
+        if (saved === 'granted' || saved === 'denied') hideBanner();
+      } catch(e){}
+
+      document.getElementById('accept').onclick = function(){
+        gtag('consent', 'update', { analytics_storage: 'granted' });
+        try { localStorage.setItem('ga_consent','granted'); } catch(e){}
+        // Falls der erste page_view vorher blockiert war, hier nachholen
+        gtag('event','page_view', {
+          page_location: location.href,
+          page_path: location.pathname,
+          page_title: document.title
+        });
+        hideBanner();
+      };
+      document.getElementById('decline').onclick = function(){
+        gtag('consent', 'update', { analytics_storage: 'denied' });
+        try { localStorage.setItem('ga_consent','denied'); } catch(e){}
+        hideBanner();
+      };
+    })();
+  </script>
 </body>
 </html>

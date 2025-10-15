@@ -5,26 +5,36 @@
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>Datenschutz</title>
   <link rel="stylesheet" href="assets/styles.css"/>
+
+  <!-- GA4 + Consent Mode v2 -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+
+    // 1) Default: alles verweigert
+    gtag('consent', 'default', {
+      ad_user_data: 'denied',
+      ad_personalization: 'denied',
+      ad_storage: 'denied',
+      analytics_storage: 'denied'
+    });
+
+    // 2) Vorhandene Entscheidung anwenden (aus localStorage)
+    try {
+      var saved = localStorage.getItem('ga_consent');
+      if (saved === 'granted' || saved === 'denied') {
+        gtag('consent', 'update', { analytics_storage: saved });
+      }
+    } catch (e) { /* ignore */ }
+  </script>
+
+  <!-- GA4: Mess-ID einmalig (IDENTISCH auf allen Seiten!) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-RLN7N8WFZF"></script>
+  <script>
+    gtag('js', new Date());
+    gtag('config', 'G-RLN7N8WFZF');
+  </script>
 </head>
-<!-- Google tag (gtag.js) -->
-<script>
-window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-
-// Standard: Ohne Einwilligung ist alles deaktiviert
-gtag('consent', 'default', {
-  ad_user_data: 'denied',
-  ad_personalization: 'denied',
-  ad_storage: 'denied',
-  analytics_storage: 'denied'
-});
-</script>
-
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-A1BCD2EFGH"></script>
-<script>
-gtag('js', new Date());
-gtag('config', 'G-RLN7N8WFZF');
-</script>
 
 <body>
   <div class="container">
