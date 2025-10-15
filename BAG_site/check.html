@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="de" data-page="check">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Schnell‑Check</title>
+  <link rel="stylesheet" href="assets/styles.css"/>
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <a class="brand" href="index.html" aria-label="Start">
+<svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect x="2" y="2" width="20" height="20" rx="6" stroke="#7ee787" stroke-width="2"/>
+<path d="M7 12h10M12 7v10" stroke="#7ee787" stroke-width="2" stroke-linecap="round"/>
+</svg>
+<strong>Genehmigungs‑Check</strong></a>
+      <div class="lang">
+        <span data-i18n-common="lang">Sprache</span>
+        <select id="langSel" aria-label="Sprache wählen">
+          <option value="de">Deutsch</option>
+          <option value="en">English</option>
+        </select>
+      </div>
+    </header>
+
+    <main class="main">
+      <div class="card">
+        <h1 id="title">Schnell‑Check</h1>
+        <p id="intro" class="lead">Hake an, was auf deinen Betrieb zutrifft. Ergebnis erscheint unten.</p>
+        <form>
+          <fieldset>
+            <legend>Fragen</legend>
+            <label for="q1">Frage 1</label><input id="q1" type="checkbox"/>
+            <label for="q2">Frage 2</label><input id="q2" type="checkbox"/>
+            <label for="q3">Frage 3</label><input id="q3" type="checkbox"/>
+            <label for="q4">Frage 4</label><input id="q4" type="checkbox"/>
+          </fieldset>
+        </form>
+        <div class="result" id="result">–</div>
+        <p id="note" class="muted"></p>
+        <div class="buttons">
+          <a id="back" class="button" href="index.html">Zur Startseite</a>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <nav>
+        <a href="impressum.html" data-i18n-common="imp">Impressum</a>
+        <a href="datenschutz.html" data-i18n-common="priv">Datenschutz</a>
+      </nav>
+    </footer>
+  </div>
+  <script src="js/app.js"></script>
+</body>
+</html>
