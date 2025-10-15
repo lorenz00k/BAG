@@ -7,14 +7,25 @@
   <link rel="stylesheet" href="assets/styles.css"/>
 </head>
 <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-RLN7N8WFZF"></script>
 <script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
 
-  gtag('config', 'G-RLN7N8WFZF');
+// Standard: Ohne Einwilligung ist alles deaktiviert
+gtag('consent', 'default', {
+  ad_user_data: 'denied',
+  ad_personalization: 'denied',
+  ad_storage: 'denied',
+  analytics_storage: 'denied'
+});
 </script>
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-A1BCD2EFGH"></script>
+<script>
+gtag('js', new Date());
+gtag('config', 'G-RLN7N8WFZF');
+</script>
+
 <body>
   <div class="container">
     <header class="header">
